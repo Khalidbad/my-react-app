@@ -1,0 +1,28 @@
+.data{
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    height: 400px;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid azure;
+}
+.icons-stats{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+span.ligne{
+    border: 1px solid azure;
+
+
+}
+span.stats-nbr{
+    color: #ffffff;
+
+}
+span.stats-names{
+    color: white;
+    font-size: xx-large;
+    font-style: inherit;
+}

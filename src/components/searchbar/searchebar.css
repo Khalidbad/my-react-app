@@ -1,0 +1,25 @@
+.searchform{
+height: calc(100vh-400px);
+display: flex;
+justify-content: center;
+align-items: center;
+color: #FFFFFF;
+}
+.my-form {
+    width: 400px;
+    margin: 0 auto; /* center horizontally */
+    height: 100px;
+    display: flex;
+    color: rgb(255, 255, 255);
+  }
+  .btn-search{
+    width: 71px;
+    height: 82px;
+    border-radius: 0px 22px 22px 0px;
+    background-color:#595959 ;
+  }
+  .input-form  {
+    height: 82px;
+    color: #FFFFFF;
+        }
+  

@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Soleil = (props) => (
+const Soleil = ({ width = 48, height = 48, ...props }) => (
   <svg
     viewBox="0 0 30 30"
-    width={props.width || 48}
-    height={props.height || 48}
+    width={width}
+    height={height}
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     {...props}

@@ -1,15 +1,14 @@
 import React from 'react';
 
 // Make Fog accept props for size and style, and remove the wrapping <div> to allow flexible sizing
-const Fog = (props) => (
+const Fog = ({ width = 48, height = 48, ...props }) => (
   <svg
     data-name="Layer 1"
     id="Layer_1"
     viewBox="0 0 64 64"
     xmlns="http://www.w3.org/2000/svg"
-    width={props.size || 48}
-    height={props.size || 48}
-    style={props.style}
+    width={width}
+    height={height}
     {...props}
   >
     <defs>

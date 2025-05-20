@@ -9,6 +9,14 @@ import Map from '../../assets/icons/map';
 import Time from '../../assets/icons/time';
 import Fog from '../../assets/icons/fog';
 import Rain from '../../assets/icons/rain';
+import FewCloud from '../../assets/icons/fewcloud';
+import Thunderstorm from '../../assets/icons/thunderstorm';
+import Snow from '../../assets/icons/snow';
+import Mist from '../../assets/icons/mist';
+import Sun from '../../assets/icons/sun';
+import { motion } from 'framer-motion';
+
+
 
 const Result = ({ weather }) => {
   const city = weather?.name || 'City';
@@ -19,34 +27,71 @@ const Result = ({ weather }) => {
   const sunrise = weather?.sys?.sunrise ? new Date(weather.sys.sunrise * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '--:--';
   const sunset = weather?.sys?.sunset ? new Date(weather.sys.sunset * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '--:--';
   const date = weather?.dt ? new Date(weather.dt * 1000).toLocaleString() : new Date().toLocaleString();
-  const renderIcon = () => {
-    const main = weather?.weather?.[0]?.main;
-    switch (main) {
-      case "Snow":
-        return <span role="img" aria-label="snow">❄️</span>; // fallback to emoji
-      case "Clear":
-        return <Soleil width={64} height={64} />;
-      case "Clouds":
-        return <Fog width={64} height={64} />;
-      case "Rain":
-        return <Rain width={64} height={64} />;
-      case "Mist":
-      case "Fog":
-        return <Fog width={64} height={64} />;
-      default:
-        return <Temp />; 
-    }
-  };
-
+   
+ const RenderIcon = () => {
+  switch (weather?.weather[0]?.icon.substring(0,2)){
+    case '01':
+      return <Sun width={64} height={64}/>;
+    case '02' :
+      return <FewCloud width={64} height={64}/> 
+    case '03' :
+      return <Fog width={64} height={64}/>
+    case '04' :
+      return <Fog width={64} height={64}/>
+    case '09' : 
+      return <Rain width={64} height={64}/>
+    case '10' :
+      return <Rain width={64} height={64}/>
+    case '11' :
+      return <Thunderstorm width={64} height={64}/>
+    case '13' : 
+      return <Snow width={64} height={64}/>
+    case '50' :
+      return <Mist width={64} height={64}/>
+  }
+ }
   return (
     <>
-    <div className='data'>
+    <motion.div className='data' 
+                initial={{ left: '100vw' }}
+                animate={{ left: '0' }}
+                transition={{ duration: 2, type: 'spring', bounce: 0.4 }}
+    >
+     
       <div className='city-date-block' style={{ position: 'absolute', top: 32, left: 0, right: 0, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 2 }}>
         <span className='city-name'>{city}{country && `, ${country}`} <span style={{ display: 'inline-block' }}><Map color="#00e1ff" /></span></span>
         <span className='date-line'>{date}<span style={{ display: 'inline-block' }}><Time color="#ffb300" /></span></span>
-        <span className='fog-icon'>
-          {renderIcon()}
-        </span>
+         <motion.span 
+         
+      className="fog-icon"
+       style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "200px", // adjust size as needed
+        width: "200px",
+        background: "#0d1117", // optional dark background for contrast
+        borderRadius: "1rem", // optional rounded corners
+      }}
+      drag
+      initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+      animate={{
+        opacity: [0.8, 1, 0.8],
+        scale: [1, 1.1, 1],
+        rotate: [0, 3, -3, 0],
+      }}
+      transition={{
+        duration: 4,
+        repeat: Infinity,
+        repeatType: "mirror",
+        ease: "easeInOut",
+      }}
+      style={{
+        filter: "drop-shadow(0 0 6px rgba(200,200,255,0.6))",
+      }}
+    >
+      <RenderIcon />
+    </motion.span>
       </div>
       <div className='icons-stats'> 
         <div className='icon-label'>
@@ -83,7 +128,7 @@ const Result = ({ weather }) => {
          <span className='stats-nbr'>{temp}</span>
          </div>
       </div>
-    </div>
+    </motion.div>
     </>
   )
 }

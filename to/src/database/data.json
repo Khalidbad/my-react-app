@@ -1,0 +1,34 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "title": "javascript",
+      "completed": true
+    },
+    {
+      "id": 1,
+      "title": "typescript",
+      "completed": false
+    },
+    {
+      "id": 1,
+      "title": "laravel",
+      "completed": true
+    },
+    {
+      "id": 2,
+      "title": "javascript",
+      "completed": false
+    },
+    {
+      "id": 1,
+      "title": "Leanne",
+      "completed": true
+    },
+    {
+      "id": 1,
+      "title": "Leanne",
+      "completed": true
+    }
+  ]
+}

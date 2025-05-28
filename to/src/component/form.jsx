@@ -6,19 +6,21 @@ import { useState } from 'react';
 
 
 const Form = ({ onAddTodo }) => {
-    const [id, setId] = useState(1);
     const { register, handleSubmit, formState: { errors ,isValid }, reset , } = useForm();
     const onSubmit = async (data) => {
     const completed = !!data.completed;
-    console.log("idupdate",id);
     
-    const nextId = id + 1;
-    setId(nextId); // This will update state for the next submission
-     const TodoModelInstance = new TodoModel(id, data.title, completed);
+   
+     const TodoModelInstance = new TodoModel( data.title, completed);
+
     todoApi.Create(TodoModelInstance)
             .then((response) => {
+                    console.log("Response from server:", response);
+
                 if (onAddTodo) onAddTodo(response);
                 reset();
+                     console.log("Sending:", TodoModelInstance);
+
             })
             .catch((error) => {
                 console.error("Error creating todo:", error);

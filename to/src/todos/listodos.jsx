@@ -1,29 +1,30 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import HeaderBar from './HeaderBar'
 import todoApi from '../datafetch/todoApi';
 import Form from '../component/form';
 import { Link } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+
 
 const Listodos = () => {
-  const [todos, settodos] = useState([])
-  const [loading, setLoading] = useState(false);
-  const[id , setId] = useState(0);
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const fetchTodos = async () => {
-      const data = await todoApi.getAll();
-      settodos(data || []);
-      console.log('Fetched data:', data);
-    };
-    fetchTodos();
-  }, []);
-  const onAddTodo = (todo) => {
-    settodos((prevTodos) => [...prevTodos, todo]);
-  } 
-  const idupdate=(id) => {
-    
-  }
+  const { data: todos = [], isLoading, isError, error } = useQuery({
+    queryKey: ['todos'],
+    queryFn: todoApi.getAll,
+    refetchOnWindowFocus: true,
+    retry: 1,
+    cacheTime: 1000 * 60 * 5, // Cache for 5 minutes
+    staleTime: 1000 * 60 * 1, // Data is fresh for 1 minute
+  });
 
+  // Handler to refetch todos after adding
+  const onAddTodo = () => {
+    queryClient.invalidateQueries(['todos']);
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>{error.message}</div>;
 
 
  
@@ -31,7 +32,7 @@ const Listodos = () => {
   return (
     <>
       <HeaderBar />
-      <Form  onAddTodo={onAddTodo}/>
+      <Form onAddTodo={onAddTodo} />
       <div className="w-full px-4 py-6 mt-20">
         <div className="max-w-5xl mx-auto space-y-6">
           <h2 className="text-2xl font-bold  text-sky-700 ">Todo List</h2>
@@ -73,7 +74,8 @@ const Listodos = () => {
           </table>
         </div>
       </div>
-    </>
+      </>
+   
   )
 }
 

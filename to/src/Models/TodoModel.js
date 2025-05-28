@@ -1,6 +1,5 @@
 export default class TodoModel {
-    constructor(id=null , title="", completed=false) {
-        this.id = id;
+    constructor( title="", completed=false) {
         this.title = title;
         this.completed = completed;
     }
